@@ -1,0 +1,29 @@
+-- Database aanmaken
+CREATE DATABASE IF NOT EXISTS games_database;
+USE games_database;
+
+-- Tabel voor spelers
+CREATE TABLE IF NOT EXISTS spelers (
+  speler_id INT AUTO_INCREMENT PRIMARY KEY,
+  naam VARCHAR(255) NOT NULL,
+  start_datum TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  custom VARCHAR(255) -- Of TEXT als je dit custom veld geen maximale lengte wilt specificeren
+);
+
+-- Tabel voor matches
+CREATE TABLE IF NOT EXISTS matches (
+  match_id INT AUTO_INCREMENT PRIMARY KEY,
+  winnaar_id INT NOT NULL,
+  verliezer_id INT NOT NULL,
+  score_winnaar INT NOT NULL,
+  score_verliezer INT NOT NULL,
+  draw BOOLEAN NOT NULL DEFAULT FALSE,
+  datum TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  flag VARCHAR(255),
+  info VARCHAR(255),
+  FOREIGN KEY (winnaar_id) REFERENCES spelers(speler_id),
+  FOREIGN KEY (verliezer_id) REFERENCES spelers(speler_id)
+);
+
+-- Voeg enkele voorbeeld spelers toe
+INSERT INTO spelers (naam) VALUES ('Speler A'), ('Speler B'), ('Speler C'), ('Speler D'), ('Speler E'), ('Speler F');
